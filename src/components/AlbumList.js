@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import axios from 'axios';
 import AlbumDetail from './AlbumDetail';
 
-class AlbumList extends Component {
-  state = {photoset: null};
+const AlbumList = ({ navigation }) => {
+  const [photoset, setPhotoset] = useState(null);
 
-  componentWillMount() {
+  useEffect(() => {
     axios
       .get(
         'https://api.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=6e8a597cb502b7b95dbd46a46e25db8d&user_id=137290658%40N08&format=json&nojsoncallback=1',
       )
       .then((response) =>
-        this.setState({photoset: response.data.photosets.photoset}),
+        setPhotoset(response.data.photosets.photoset)
       );
-  }
+  }, []);
 
-  renderAlbums() {
-    return this.state.photoset.map((album) => (
+  const renderAlbums = () => {
+    return photoset.map((album) => (
       <AlbumDetail
-        navigation={this.props.navigation}
+        navigation={navigation}
         key={album.id}
         title={album.title._content}
         albumId={album.id}
@@ -27,16 +27,15 @@ class AlbumList extends Component {
     ));
   }
 
-  render() {
-    console.log(this.state);
-
-    if (!this.state.photoset) {
-      return <Text>Loading...</Text>;
-    }
-
+  if (!photoset) {
     return (
-      <View style={{flex: 1}}>
-        <ScrollView>{this.renderAlbums()}</ScrollView>
+      <Text>Loading...</Text>
+    )
+  }
+  else {
+    return (
+      <View style={{ flex: 1 }}>
+        <ScrollView>{renderAlbums()}</ScrollView>
       </View>
     );
   }
