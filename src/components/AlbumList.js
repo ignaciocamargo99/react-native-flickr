@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import axios from 'axios';
 import AlbumDetail from './AlbumDetail';
 
@@ -16,16 +16,14 @@ const AlbumList = ({ navigation }) => {
       );
   }, []);
 
-  const renderAlbums = () => {
-    return photoset.map((album) => (
-      <AlbumDetail
-        navigation={navigation}
-        key={album.id}
-        title={album.title._content}
-        albumId={album.id}
-      />
-    ));
-  }
+  const renderAlbums = ({ item }) => (
+    <AlbumDetail
+      navigation={navigation}
+      key={item.id}
+      title={item.title._content}
+      albumId={item.id}
+    />
+  )
 
   if (!photoset) {
     return (
@@ -35,7 +33,11 @@ const AlbumList = ({ navigation }) => {
   else {
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView>{renderAlbums()}</ScrollView>
+        <FlatList
+          data={photoset}
+          renderItem={renderAlbums}
+          keyExtractor={item => item.id}
+        />
       </View>
     );
   }
