@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, ActivityIndicator, View, Text } from 'react-native';
 import axios from 'axios';
 import PhotoDetail from './PhotoDetail';
 
@@ -26,8 +26,9 @@ const PhotoList = (props) => {
 
   if (!photos) {
     return (
-      <View style={{ flex: 1 }}>
-        <Text>Loading...</Text>
+      <View style={{justifyContent: 'center', flex: 1}}>
+        <ActivityIndicator size="large" color="#1E67A2" />
+        <Text style={{textAlign: 'center', fontSize:17}}>Loading</Text>
       </View>
     );
   } else {
@@ -44,3 +45,4 @@ const PhotoList = (props) => {
 }
 
 export default PhotoList;
+

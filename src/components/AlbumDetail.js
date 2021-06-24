@@ -18,7 +18,7 @@ const AlbumDetail = ({navigation, title, albumId}) => {
       <CardSection>
         <Button
           onPress={() => navigation.navigate('photoList', {albumId: albumId})}>
-          See Now!
+          See now
         </Button>
       </CardSection>
     </Card>
