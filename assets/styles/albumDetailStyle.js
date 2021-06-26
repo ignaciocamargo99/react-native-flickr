@@ -6,6 +6,7 @@ const styles = {
     },
     headerTextStyle: {
         fontSize: 18,
+        fontWeight: 'bold'
     },
     thumbnailStyle: {
         height: 50,
